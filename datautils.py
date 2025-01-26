@@ -32,8 +32,8 @@ def get_wikitext2(nsamples, seed, seqlen, model, tokenizer=None):
 
 def get_ptb(nsamples, seed, seqlen, model, tokenizer=None):
     from datasets import load_dataset
-    traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train')
-    valdata = load_dataset('ptb_text_only', 'penn_treebank', split='validation')
+    traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train', trust_remote_code=True)
+    valdata = load_dataset('ptb_text_only', 'penn_treebank', split='validation', trust_remote_code=True)
 
     if tokenizer is None:
         from transformers import AutoTokenizer 
@@ -52,6 +52,7 @@ def get_ptb(nsamples, seed, seqlen, model, tokenizer=None):
         tar[:, :-1] = -100
         trainloader.append((inp, tar))
     return trainloader, testenc
+
 
 def get_c4(nsamples, seed, seqlen, model, tokenizer=None):
     from datasets import load_dataset
@@ -104,8 +105,8 @@ def get_c4(nsamples, seed, seqlen, model, tokenizer=None):
 
 def get_ptb_new(nsamples, seed, seqlen, model):
     from datasets import load_dataset
-    traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train')
-    testdata = load_dataset('ptb_text_only', 'penn_treebank', split='test')
+    traindata = load_dataset('ptb_text_only', 'penn_treebank', split='train', trust_remote_code=True)
+    testdata = load_dataset('ptb_text_only', 'penn_treebank', split='test', trust_remote_code=True)
 
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(model, use_fast=False)
@@ -123,6 +124,7 @@ def get_ptb_new(nsamples, seed, seqlen, model):
         tar[:, :-1] = -100
         trainloader.append((inp, tar))
     return trainloader, testenc
+
 
 def get_c4_new(nsamples, seed, seqlen, model):
     from datasets import load_dataset
@@ -164,7 +166,7 @@ def get_c4_new(nsamples, seed, seqlen, model):
 
 
 def get_loaders(
-    name, nsamples=128, seed=0, seqlen=2048, model='', tokenizer=None
+    name, nsamples=128, seed=0, seqlen=2048, model='', tokenizer=None, trust_remote_code=True
 ):
     if 'wikitext2' in name:
         return get_wikitext2(nsamples, seed, seqlen, model, tokenizer)

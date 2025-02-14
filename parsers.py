@@ -175,6 +175,12 @@ def parse_args():
 			'--incoh_processing',
 			action='store_true',
 			help='incoherence processing')
+  ##Added
+	parser.add_argument(
+			'--time',
+			action='store_true',
+			help='Measure execution time')
+  ##Added
 
 	args = parser.parse_args()
 		

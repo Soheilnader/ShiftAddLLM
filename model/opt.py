@@ -427,6 +427,9 @@ if __name__ == '__main__':
     from datautils import *
     args = parse_args()
     
+    if args.time:
+        start_time = time.time()
+
     if args.temp_storage is not None:
         os.makedirs(args.temp_storage, exist_ok=True)
 
@@ -485,3 +488,8 @@ if __name__ == '__main__':
         )
         print(dataset)
         opt_eval(model, testloader, DEV)
+
+    if args.time:
+      end_time = time.time()
+      elapsed_time = end_time - start_time
+      print(f"Execution Time: {elapsed_time:.2f} seconds")
